@@ -1,23 +1,15 @@
-# F. Расстановка ноутбуков
+# E. Точка и треугольник
 
-tmp = list(map(int, input().split()))
+def euclid_dist_my(x1,y1,x2,y2):
+    return (x1-x2)**2 + (y1-y2)**2
 
-a1=tmp[0]
-b1=tmp[1]
-a2=tmp[2]
-b2=tmp[3]
 
-sides1 = [a1+a2, a1+a2, a1+a2, a1+b2, a1+b2, a1+b2, a1+0, a1+0, b1+a2, b1+a2, b1+a2, b1+b2, b1+b2, b1+b2, b1+0, b1+0, 0+a2, 0+b2]
-sides2 = [b1+b2, b1+0, 0+b2, a2+b1, a2+0, 0+b1, a2+b1, b1+b2,   a1+b2, b2+0, 0+a1, a1+a2, a2+0, 0+a1, a1+a2, a1+b2,   a1+b2,a2+b1]
+def tri_area(d,x,y):
+    if x >= 0 and y >= 0 and y <= d-x:
+        return 0
+    dist = [euclid_dist_my(x,y,0,0), euclid_dist_my(x,y,d,0), euclid_dist_my(x,y,0,d)]
+    return dist.index(min(dist))+1
 
-s_cur = 0
-s = a1*b1+a2*b2
-i_opt = []
-s_opt = []
-for i in range(len(sides1)):
-    s_cur = sides1[i]*sides2[i]
-    if s_cur >= s:
-        s_opt.append(s_cur)
-        i_opt.append(i)
-i_opt = i_opt[s_opt.index(min(s_opt))]
-print(sides1[i_opt], sides2[i_opt])
+d = int(input())
+x,y = tuple(map(int, input().split()))
+print(tri_area(d,x,y))
